@@ -1,0 +1,26 @@
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+\title{ {{ stitle }} }
+%\subtitle{}
+\date{}
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+%  プリアンブルにて定義
+\newcommand{\codedir}{../{{ sdir }}/}
+\begin{document}
+\begin{frame}[plain,noframenumbering]
+  % Print the title page as the first slide
+  \titlepage
+
+  \bigskip
+  \begin{center}
+    \ifteachermode
+      教師用
+    \fi
+  \end{center}
+\end{frame}
+
+% 本編開始前にフレーム番号をリセット
+\setcounter{framenumber}{0}

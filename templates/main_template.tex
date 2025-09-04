@@ -1,0 +1,170 @@
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+% 2期のテーマ
+\usetheme{SimpleDarkBlue}
+% 3期のテーマ
+%%%\usetheme{Madrid}  
+%%%\usecolortheme{orchid} 
+% \documentclass[aspectratio=43, 11pt, 11pt, t]{beamer}
+
+%%%%%%%  metropolis-brown   %%%%%%%%%%
+%% \documentclass[10pt]{beamer}
+%% \usetheme[progressbar=frametitle]{metropolis}
+%% \usepackage{appendixnumberbeamer}
+%% \usepackage{metropolisbrown} % Don't forget to load this!
+%%%%%%%  metropolis-brown   %%%%%%%%%%
+
+
+\usepackage{luatexja}    % 日本語対応（LuaLaTeX専用）
+%\usepackage{enumitem}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage[table,xcdraw]{xcolor}
+%\usepackage{listingsutf8}
+\usepackage{array}  % ← これを preamble に追加
+\usepackage{tabularx} % プリアンブルに追加（必要なら）
+\usepackage{dirtree}
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage{xcolor}
+%\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue]{hyperref}
+\usepackage{tikz}
+\usepackage{graphicx} % Allows including images
+\graphicspath{{images/}{../@@dir@@/images/}}
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{url} % プリアンブルに追加
+\usepackage{makecell} 
+\usepackage{lipsum} % サンプル用（不要なら削除）
+\usepackage{setspace} % プリアンブルで
+\usepackage{mathtools}
+\usepackage{longtable}
+\usepackage{pdfpages}
+% 色・アイコン
+\usepackage{xcolor}
+\definecolor{ok}{HTML}{2E7D32}
+\definecolor{warn}{HTML}{EF6C00}
+\definecolor{info}{HTML}{1565C0}
+
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox to \paperwidth{%
+    \hfill
+    \scriptsize \insertframenumber{} / \inserttotalframenumber%
+    \hspace*{0.5cm}%
+  }%
+  \vspace{0.25cm}
+}
+%シンプルな青背景ボックスを定義して使う
+\tcbset{
+  mybluebox/.style={
+    colback=cyan!10,      % 背景色（薄い水色）
+    colframe=blue!50!black, % 枠の色
+    boxrule=0.8pt,        % 枠線の太さ
+    arc=1mm,              % 枠の角の丸み
+    left=6pt, right=6pt, top=6pt, bottom=6pt,
+    enhanced
+  }
+}
+
+\lstdefinestyle{darkstyle}{
+  backgroundcolor=\color{gray!20!black}, % 背景を濃いグレーに
+  basicstyle=\ttfamily\color{white}\small, % 文字を白に
+  frame=single,
+  language=C
+}
+\lstdefinestyle{cmdstyle}{
+  backgroundcolor=\color[RGB]{30,30,30}, % 黒に近い濃い灰色
+  basicstyle=\ttfamily\color{yellow},    % 太字
+  breaklines=true,
+  frame=single,
+  showstringspaces=false,
+  rulecolor=\color{gray}
+}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true,
+  xleftmargin=2em,
+  escapechar=§,
+%  escapeinside={(*@}{@*)}, % この中はLaTeXとして処理される
+}
+
+\definecolor{myDarkBlue}{RGB}{13,38,88}
+\AtBeginSection[]{
+  \begin{frame}[plain]
+    \vfill
+    \rule{\textwidth}{2pt}  % 上の線
+    \begin{center}
+      {\color{myDarkBlue}\Huge \textbf{\insertsection}}
+    \end{center}
+    \rule{\textwidth}{2pt}  % 下の線
+    \vfill
+  \end{frame}
+}
+
+
+%\mypausemodetrue % または \mypausemodefalse
+% \newif\ifmypausemode
+% \newcommand{\mypause}{%
+%   \ifmypausemode
+%     \pause
+%   \fi
+% }
+
+% \def\techoutmode{0} % 1: 教師ノート非表示、0: 教師ノート表示
+% 
+% \newcommand{\teachernote}[1]{%
+%   \ifnum\techoutmode=0
+%     \begin{block}{教員メモ}
+%     #1
+%     \end{block}
+%   \fi
+% }
+\usepackage{teacherframe}
+
+% \newif\ifteachermode
+% % \teachermodetrue % ← 教師用（表示）ならtrue、生徒用（非表示）ならfalse
+% % \teachermodefalse % ← 生徒用（非表示）ならこっち
+% \definecolor{myblue}{HTML}{E5F1F9}
+% \definecolor{myred}{HTML}{B02418}
+% \newcommand{\teacherframe}[2]{%
+%   \ifteachermode{
+%     % 一時的にタイトルバーの背景と文字色を変更
+%     \setbeamercolor{frametitle}{bg=myblue}
+%     \begin{frame}[allowframebreaks] % ← ここがポイント！
+% 	 \frametitle{\textcolor{myred}{\textbf{#1}}}
+%       #2
+%     \end{frame}
+% 	% もとに戻す（省略可：次のフレームで自動的にリセットされる）
+% 	}
+%   \fi
+% }
+
+\newcommand{\myfootertext}{@@footer@@}
+\setbeamertemplate{footline}{
+  \leavevmode
+  \hbox to \paperwidth{
+    \hspace*{0.2cm}
+    \scriptsize\color{gray!50} \myfootertext
+    % 右端ページ番号
+    \hfill
+    \scriptsize\color{gray} \insertframenumber{} / \inserttotalframenumber
+    \hspace*{0.4cm}
+  }
+  \vspace{1pt}
+}
+
+\tcbuselibrary{listings, breakable}
+% カスタム環境
+\newtcolorbox{mycodebox}{
+  colback=blue!5, colframe=blue!70!black,
+  arc=1mm, boxrule=1pt, left=2mm, right=2mm, top=1mm, bottom=1mm,
+  listing only, listing options={style=cmdstyle}
+}
+

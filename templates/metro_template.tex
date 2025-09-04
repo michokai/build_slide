@@ -1,0 +1,103 @@
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES　metropolis
+%----------------------------------------------------------------------------------------
+\documentclass[aspectratio=169]{beamer}
+
+% ---- Theme / Fonts ----
+\usetheme{metropolis} % すっきり系。なければコメントアウト
+\metroset{block=fill, sectionpage=progressbar, progressbar=foot}
+
+% 日本語（LuaLaTeX推奨）
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+% \setmainjfont{Noto Sans CJK JP} % 手元の日本語フォント名に合わせて変更可
+% \setsansjfont{Noto Sans CJK JP}
+%\setsansjfont{Hiragino Sans}
+% 和文フォントの指定（macならヒラギノ角ゴ）
+\setsansjfont{Hiragino Sans}[BoldFont={Hiragino Sans W6}]
+% （必要なら明朝も：\setmainjfont{Hiragino Mincho ProN} など）
+\setmonojfont{JetBrains Mono} % 等幅フォント（任意）
+% 色・アイコン
+\usepackage{xcolor}
+\definecolor{ok}{HTML}{2E7D32}
+\definecolor{warn}{HTML}{EF6C00}
+\definecolor{info}{HTML}{1565C0}
+\definecolor{bunrui}{HTML}{4EC2D8}
+
+\usepackage[table]{xcolor}
+
+\usepackage{graphicx} % Allows including images
+\graphicspath{{images/}{../@@dir@@/images/}}
+\usepackage[abs]{overpic}
+
+% コードやコマンド
+\usepackage{minted}  % コンパイル時に -shell-escape が必要
+\setminted{
+  fontsize=\footnotesize,
+  breaklines=true,
+  breaksymbolleft=\small\color{gray}{\ding{229}},
+  frame=single
+}
+\usepackage{pifont}
+
+\newcommand{\myfootertext}{@@footer@@}
+\setbeamertemplate{footline}{
+  \leavevmode
+  \hbox to \paperwidth{
+    \hspace*{0.2cm}
+    \scriptsize\color{gray!50} \myfootertext
+    % 右端ページ番号
+    \hfill
+    \scriptsize\color{gray} \insertframenumber{} / \inserttotalframenumber
+    \hspace*{0.4cm}
+  }
+  \vspace{1pt}
+}
+
+%\mypausemodetrue % または \mypausemodefalse
+% \newif\ifmypausemode
+% \newcommand{\mypause}{%
+%   \ifmypausemode
+%     \pause
+%   \fi
+% }
+
+\usepackage{teacherframe}
+
+% \newif\ifteachermode
+% \newcommand{\teacherframe}[2]{%
+%   \ifteachermode{
+%     % 一時的にタイトルバーの背景と文字色を変更
+%     \setbeamercolor{frametitle}{bg=myblue}
+%     \begin{frame}[allowframebreaks] % ← ここがポイント！
+% 	 \frametitle{\textcolor{myred}{\textbf{#1}}}
+%       #2
+%     \end{frame}
+% 	% もとに戻す（省略可：次のフレームで自動的にリセットされる）
+% 	}
+%   \fi
+% }
+
+\usepackage{array} % プリアンブルに追加
+
+% C{幅} という列型を定義（中央寄せ＋固定幅）
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+%\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}} % middle の m
+\newcolumntype{M}[1]{>{\raggedright\arraybackslash}m{#1}}
+
+
+
+
+% 箇条書きの間隔や見た目
+\setlength{\parskip}{4pt}
+
+\usepackage{caption} % プリアンブルに追加
+\usepackage{enumitem} % プリアンブルに追加
+\usepackage{setspace} % プリアンブルに追加
+
+
+\usepackage{dirtree}
+
+% 黒丸を消して、テキストだけ表示する
+\renewcommand*\DTstyle{\ttfamily}     % ノードのスタイル
+\renewcommand*\DTstylecomment{\rmfamily\itshape\small} % コメント部分のスタイル

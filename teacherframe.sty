@@ -1,0 +1,44 @@
+% teacherframe.sty
+%
+% 教師メモ用のマクロ
+% \teacherframe{タイトル}{....}
+% python build_metro.py 科目コード　授業番号 --tech  <--　このオプションの時に表示される
+%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{teacherframe}[2025/08/30 Common TeacherFrame]
+
+\RequirePackage{xcolor}
+
+% 色は未定義なら用意（任意だが親切）
+\providecolor{myblue}{HTML}{E5F1F9}
+\providecolor{myred}{HTML}{B02418}
+
+
+% ========== teacherframe 環境 ==========
+\newif\ifteachermode
+% \teachermodetrue  / \teachermodefalse で切替
+
+\newcommand{\teacherframe}[3][]{%
+  \ifteachermode
+    \begingroup
+      \setbeamercolor{frametitle}{bg=myblue,fg=white}%
+      \begin{frame}[t,allowframebreaks,#1]%
+        \frametitle{\textcolor{myred}{\bfseries #2}}%
+        #3%
+      \end{frame}%
+    \endgroup
+  \fi
+}
+
+% ========== mypause モード ==========
+\newif\ifmypausemode
+% \mypausemodetrue / \mypausemodefalse で切替
+
+\newcommand{\mypause}{%
+  \ifmypausemode
+    \pause
+  \fi
+}
+
+\endinput
