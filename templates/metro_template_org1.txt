@@ -1,0 +1,80 @@
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES (metropolis)
+%----------------------------------------------------------------------------------------
+\documentclass[aspectratio=169]{beamer}
+% \documentclass より後、\usetheme より前
+\PassOptionsToPackage{unicode=true,colorlinks=true,linkcolor=blue,urlcolor=blue}{hyperref}
+\usetheme{metropolis}
+\metroset{block=fill, sectionpage=progressbar, progressbar=foot}
+
+% 日本語と基本パッケージ
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec} % 必要に応じて
+\setsansjfont{Hiragino Sans}[BoldFont={Hiragino Sans W6}]
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+% 共通・個別・ビルド配下すべてを見る（共通は project_assets/images）
+\graphicspath{{images/}{../@@sdir@@/images/}{../project_assets/images/}}
+\usepackage[abs]{overpic}
+\usepackage{minted}
+\setminted{
+  fontsize=\footnotesize,
+  breaklines=true,
+  frame=single
+}
+\usepackage{pifont}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{dirtree}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{makecell}
+\usepackage{lipsum}
+\usepackage{setspace}
+\usepackage{mathtools}
+\usepackage{longtable}
+\usepackage{pdfpages}
+
+% hyperrefは最後
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+% ------- フッター（1回だけ定義） -------
+\newcommand{\myfootertext}{@@sdir@@}
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \hbox to \paperwidth{%
+    \hspace*{0.2cm}
+    \scriptsize\color{gray!50} \myfootertext
+    \hfill
+    \scriptsize\color{gray} \insertframenumber{} / \inserttotalframenumber
+    \hspace*{0.4cm}
+  }%
+  \vspace{1pt}
+}
+
+% ------- 任意の共通マクロ・パッケージ -------
+\usepackage{../teacherframe}
+%\usepackage{teacherframe} % TEXINPUTSか相対パスで見つかるように
+
+% 切替トグル（Pythonから差し込み）
+%@@pausemode@@
+%@@teachermode@@
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+\title{ @@stitle@@ }
+\date{}
+
+\newcommand{\codedir}{../@@sdir@@/}
+
+\begin{document}
+\begin{frame}[plain,noframenumbering]
+  \titlepage
+  \bigskip
+  \begin{center}
+    \ifteachermode 教師用 \fi
+  \end{center}
+\end{frame}
+
+\setcounter{framenumber}{0}

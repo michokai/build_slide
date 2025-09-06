@@ -1,0 +1,128 @@
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES (SimpleDarkBlue)
+%----------------------------------------------------------------------------------------
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+% \documentclass より後、\usetheme より前
+%\usepackage{xparse}
+\PassOptionsToPackage{unicode=true,colorlinks=true,linkcolor=blue,urlcolor=blue}{hyperref}
+\usetheme{SimpleDarkBlue}
+
+% 日本語と基本パッケージ
+\usepackage{luatexja}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage[table,xcdraw]{xcolor} % xcolorは一箇所
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{dirtree}
+\usepackage{minted}                % mintedを使うので -shell-escape 必須
+\usepackage{tikz}
+\usepackage{graphicx}
+% 共通・個別・ビルド配下すべてを見る（共通は project_assets/images）
+\graphicspath{{images/}{../../@@sdir@@/images/}{../project_assets/images/}}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{makecell}
+\usepackage{lipsum}
+\usepackage{setspace}
+\usepackage{mathtools}
+\usepackage{longtable}
+\usepackage{pdfpages}
+
+% hyperrefは最後
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+% ------- フッター（1回だけ定義） -------
+\newcommand{\myfootertext}{@@sdir@@}
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \hbox to \paperwidth{%
+    \hspace*{0.2cm}
+    \scriptsize\color{gray!50} \myfootertext
+    \hfill
+    \scriptsize\color{gray} \insertframenumber{} / \inserttotalframenumber
+    \hspace*{0.4cm}
+  }%
+  \vspace{1pt}
+}
+
+% ------- 任意の共通マクロ・パッケージ -------
+% \usepackage{teacherframe} % TEXINPUTSか相対パスで見つかるように
+%\usepackage{../build_slide/teacherframe}
+\usepackage{../teacherframe}
+%\usepackage{teacherframe}
+
+
+% 通し番号カウンタ
+%\newcounter{framenum}
+%
+%% 使い方: \begin{numframe}[<frameオプション>]{<タイトル>} ... \end{numframe}
+%\NewDocumentEnvironment{numframe}{O{} m}{%
+%  \stepcounter{framenum}%
+%  \begin{frame}[#1]{\theframenum.\, #2}%
+%}{%
+%  \end{frame}%
+%}
+
+% --- タイトル左に「通し番号. タイトル」 ---
+\setbeamertemplate{frametitle}{%
+  \vspace{0.6ex}%
+  \begin{beamercolorbox}[wd=\paperwidth,sep=0.5ex,leftskip=0.9em,rightskip=0.5em]{frametitle}%
+    \usebeamerfont{frametitle}%
+    \insertframenumber.\,\insertframetitle%
+  \end{beamercolorbox}%
+}
+
+\RequirePackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=2,
+  xleftmargin=0pt
+}
+
+\usepackage{minted} % ※ -shell-escape が必要
+
+\setminted{
+  frame=single,       % 枠を付ける
+  framesep=2mm,       % 枠と本文の間隔
+  fontsize=\footnotesize,
+  breaklines=true     % 長い行を折り返す
+}
+
+% プリアンブル
+\newcounter{myframenum}
+\setcounter{myframenum}{0}
+\setcounter{framenumber}{0}
+
+\addtobeamertemplate{frametitle}{}{%
+  \stepcounter{myframenum}%
+  \renewcommand{\insertframetitle}{\themyframenum.\,\insertframetitle}%
+}
+
+% 切替トグル（Pythonから差し込み）
+%@@pausemode@@
+%@@teachermode@@
+
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+\title{ @@stitle@@ }
+\date{}
+
+% 便利マクロ（必要なら）
+\newcommand{\codedir}{../@@sdir@@/}
+
+\begin{document}
+\begin{frame}[plain,noframenumbering]
+  \titlepage
+  \bigskip
+  \begin{center}
+    \ifteachermode 教師用 \fi
+  \end{center}
+\end{frame}
+
+% 本編開始でフレーム番号を0から
+\setcounter{framenumber}{0}
