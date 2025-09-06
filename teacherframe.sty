@@ -16,13 +16,44 @@
 
 
 % ========== teacherframe 環境 ==========
+% --- 1) 教師モードトグル（既存） ---
 \newif\ifteachermode
-% \teachermodetrue  / \teachermodefalse で切替
+% \teachermodetrue  / \teachermodefalse で切替（Pythonから差し込みでもOK）
+
+% --- 2) 番号あり/なし の frametitle テンプレートを用意 ---
+\newcommand{\numberedframetitle}{%
+  \setbeamertemplate{frametitle}{%
+    \vspace{.4ex}%
+    \begin{beamercolorbox}[wd=\paperwidth,sep=.4ex,leftskip=1em,rightskip=.8em]{frametitle}%
+      \usebeamerfont{frametitle}\insertframenumber.\,\insertframetitle
+    \end{beamercolorbox}%
+  }%
+}
+\newcommand{\plainframetitle}{%
+  \setbeamertemplate{frametitle}{%
+    \vspace{.4ex}%
+    \begin{beamercolorbox}[wd=\paperwidth,sep=.4ex,leftskip=1em,rightskip=.8em]{frametitle}%
+      \usebeamerfont{frametitle}\insertframetitle
+    \end{beamercolorbox}%
+  }%
+}
+
+% --- 3) 起動時に teachermode で自動切替 ---
+\ifteachermode
+  \plainframetitle      % 教師用：番号なし
+\else
+  \numberedframetitle   % 学生用：番号あり
+\fi
 
 \newcommand{\teacherframe}[3][]{%
   \ifteachermode
     \begingroup
+      % 通し番号カウンタを一時退避
+      \addtocounter{framenumber}{-1}%
+    % 見た目（色）は先生の既存設定
       \setbeamercolor{frametitle}{bg=myblue,fg=white}%
+      % ここで局所的に「番号なし」テンプレートを強制
+      \plainframetitle
       \begin{frame}[t,allowframebreaks,#1]%
         \frametitle{\textcolor{myred}{\bfseries #2}}%
         #3%
@@ -30,6 +61,20 @@
     \endgroup
   \fi
 }
+% \newif\ifteachermode
+% % \teachermodetrue  / \teachermodefalse で切替
+
+% \newcommand{\teacherframe}[3][]{%
+%   \ifteachermode
+%     \begingroup
+%       \setbeamercolor{frametitle}{bg=myblue,fg=white}%
+%       \begin{frame}[t,allowframebreaks,#1]%
+%         \frametitle{\textcolor{myred}{\bfseries #2}}%
+%         #3%
+%       \end{frame}%
+%     \endgroup
+%   \fi
+% }
 
 % ========== mypause モード ==========
 \newif\ifmypausemode
